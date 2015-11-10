@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Bright Sparks Settings</title>
+<style>
+body {
+    font: 100% Lucida Sans;
+    margin: 20px;
+    line-height: 22px;
+}
+
+h4{
+  margin-bottom:0px;
+}
+
+input#btnSubmitSettings {
+  margin-left: 0px;
+  margin-top: 20px;
+  padding: 7px;
+  font-family: Lucida Sans, Tahoma, sans-serif;
+  font-size:18px;
+  font-weight:600;
+  outline: none;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  color: #ffffff;
+  border: solid 1px #2DCC70;
+  background-color: #2DCC70;
+  border-radius: 4px 4px 4px 4px;
+}
+
+input#btnSubmitSettings:hover {
+  background-color:#3598DC;
+  border: solid 1px #3598DC;
+}
+
+input#btnCancelSettings {
+  margin-left: 30px;
+  margin-top: 20px;
+  padding: 7px;
+  font-family: Lucida Sans, Tahoma, sans-serif;
+  font-size:18px;
+  font-weight:600;
+  outline: none;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  color: #ffffff;
+  border: solid 1px #C1392D;
+  background-color: #C1392D;
+  border-radius: 4px 4px 4px 4px;
+}
+
+input#btnCancelSettings:hover {
+  background-color:#E84C3D;
+  border: solid 1px #E84C3D;
+}
+
+</style>
+<script type="text/javascript">
+
+function post_value(){
+
+   var allCats = "Art,Design,Music,Science,Superhero,TV,Film,Literature,Politics,Sport,Business,Religion,Crime,Magic,Games,Food,Explorer,";
+
+// Populate array with checked types
+	var rows = document.getElementsByName('typeSelect[]');
+	var selectedRows = [];
+    	for (var i = 0, l = rows.length; i < l; i++) {
+       	if (rows[i].checked) {
+       		selectedRows.push(rows[i].id);
+       	}
+  	}
+            
+	// Make string to send to the parent Bright Sparks page
+	var text = "";
+	var x;
+	for (x in selectedRows) {
+    		text += selectedRows[x] + ',';
+	}
+
+	// If no checkboxes are selected then revert back to default of all categories
+	if (text == ""){
+		text = allCats;
+	}
+
+
+	opener.document.f1.p_name.value = text;
+	opener.document.getElementById('btnCallWebService').click();
+
+	//Change heading text colour if not all categories selected
+	if(text !== allCats){
+	  opener.document.getElementById("category").style.color = "#C1392D";
+	} else {
+	  opener.document.getElementById("category").style.color = "#000000";
+	}
+
+	self.close();
+}
+
+
+
+</script>
+
+</head>
+<body>
+
+<h3>Category Filter</h3>
+
+<p>The default setting for Bright Sparks is for all of the persona subject categories to be selected. However, by using the checkboxes below you can temporarily deselect one or more of the most common categories.<p>
+
+<p>So for example, you could retrieve personas only from the Art & Design category by deselecting all the other categories.</p>
+
+<h4>Included categories</h4>
+	<form action="" method="post" name="frm">
+		<table><tr>
+			<tr><td><input type="checkbox" name="typeSelect[]" id="Art,Design" checked="true">Art & Design</td></tr></td>
+			<tr><td><input type="checkbox" name="typeSelect[]" id="Music" checked="true">Music</td></tr>
+			<tr><td><input type="checkbox" name="typeSelect[]" id="Science" checked="true">Science</td></tr>
+			<tr><td><input type="checkbox" name="typeSelect[]" id="Superhero" checked="true">Superhero</td></tr>
+			<tr><td><input type="checkbox" name="typeSelect[]" id="TV,Film" checked="true">TV & Film</td></tr>
+			<tr><td><input type="checkbox" name="typeSelect[]" id="Literature,Politics,Sport,Business,Religion,Crime,Magic,Games,Food,Explorer" checked="true">All other categories</td></tr>
+			<tr><td><input type="button" id="btnSubmitSettings" onClick="post_value();" value="Submit"><input type="button" id="btnCancelSettings" value="Cancel" onClick='self.close()'> </td></tr>
+		</table>
+	</form>
+</body>
+</html>
